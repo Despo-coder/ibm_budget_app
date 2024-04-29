@@ -68,11 +68,15 @@ export const AppReducer = (state, action) => {
             action.type = "DONE";
             state.currency = action.payload;
             return {
-                ...state
-            }
+                ...state,
+               currency: action.payload
+                }
 
         default:
             return state;
+
+
+            
     }
 };
 
@@ -106,6 +110,10 @@ export const AppProvider = (props) => {
         remaining = state.budget - totalExpenses;
     }
 
+    const handleCurrencyChange = (newCurrency) => {
+        dispatch({ type: 'CHG_CURRENCY', payload: newCurrency });
+    };
+
     return (
         <AppContext.Provider
             value={{
@@ -113,7 +121,8 @@ export const AppProvider = (props) => {
                 budget: state.budget,
                 remaining: remaining,
                 dispatch,
-                currency: state.currency
+                currency: state.currency,
+                handleCurrencyChange
             }}
         >
             {props.children}

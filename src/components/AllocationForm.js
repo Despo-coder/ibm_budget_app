@@ -2,18 +2,34 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const AllocationForm = (props) => {
-    const { dispatch,remaining  } = useContext(AppContext);
+    const { dispatch,remaining, budget  } = useContext(AppContext);
 
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [action, setAction] = useState('');
+    // const [currency, setCurrency] = useState('£')
 
+
+    
+
+
+    // it should not allow for the budget to be lower 
+    // than the spending, 
+    // as that is already allocated. 
+    // Take a screenshot of error message when 
+    // it is lower than spending and save it as 
+    // budget_morethan_spending.png.
     const submitEvent = () => {
 
             if(cost > remaining) {
                 alert("The value cannot exceed remaining funds  £"+remaining);
                 setCost("");
                 return;
+            }
+
+            if((budget - remaining) > cost){
+                alert('You cannot reduce the budget value  lower than the spending');
+                setCost(""); 
             }
 
         const expense = {
@@ -67,7 +83,15 @@ const AllocationForm = (props) => {
                         style={{ marginLeft: '2rem' , size: 10}}
                         onChange={(event) => setCost(event.target.value)}>
                         </input>
-
+                        {/* <div className="input-group-prepend" style={{ marginLeft: '2rem' }}>
+                    <label className="input-group-text" htmlFor="inputGroupSelect03">Currency</label>
+                </div> */}
+                {/* <select className="custom-select" id="inputGroupSelect03" onChange={(event) => handleCurrencyChange(currency)}>
+                    <option defaultValue value="£">Pound</option>
+                    <option value="$">US Dollar</option>
+                    <option value="₹">Rupee</option>
+                    <option value="€">Euro</option>
+                </select> */}
                     <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }}>
                         Save
                     </button>
