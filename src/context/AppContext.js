@@ -71,9 +71,18 @@ export const AppReducer = (state, action) => {
                 ...state,
                currency: action.payload
                 }
-
+                
         default:
             return state;
+
+            // Try this suggestion from copilot.
+        //     case 'CHG_CURRENCY':
+        //     return {
+        //         ...state,
+        //         currency: action.payload
+        //     };
+        // default:
+        //     return state;
 
 
             
