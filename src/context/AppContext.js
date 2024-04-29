@@ -30,6 +30,33 @@ export const AppReducer = (state, action) => {
                     ...state
                 }
             }
+
+            case 'SUB_EXPENSE':
+                let new_total_budget = 0;
+                new_total_budget = state.expenses.reduce(
+                    (previousExp, currentExp) => {
+                        return previousExp + currentExp.cost
+                    },0
+                );
+                new_total_budget = new_total_budget + action.payload.cost;
+                action.type = "DONE";
+                if(new_total_budget <= state.budget) {
+                    new_total_budget = 0;
+                    state.expenses.map((currentExp)=> {
+                        if(currentExp.name === action.payload.name) {
+                            currentExp.cost = currentExp.cost - action.payload.cost ;
+                        }
+                        return currentExp
+                    });
+                    return {
+                        ...state,
+                    };
+                } else {
+                    alert("Cannot increase the allocation! Out of funds");
+                    return {
+                        ...state
+                    }
+                }
             case 'RED_EXPENSE':
                 const red_expenses = state.expenses.map((currentExp)=> {
                     if (currentExp.name === action.payload.name && currentExp.cost - action.payload.cost >= 0) {
@@ -65,8 +92,8 @@ export const AppReducer = (state, action) => {
                 ...state,
             };
         case 'CHG_CURRENCY':
-            action.type = "DONE";
-            state.currency = action.payload;
+            // action.type = "DONE";
+            // state.currency = action.payload;
             return {
                 ...state,
                currency: action.payload
@@ -75,15 +102,7 @@ export const AppReducer = (state, action) => {
         default:
             return state;
 
-            // Try this suggestion from copilot.
-        //     case 'CHG_CURRENCY':
-        //     return {
-        //         ...state,
-        //         currency: action.payload
-        //     };
-        // default:
-        //     return state;
-
+        
 
             
     }

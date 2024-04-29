@@ -24,13 +24,16 @@ const Currency = (props) => {
             <div className='row'>
                 <div className="input-group mb-3" style={{ marginLeft: '2rem' }}>
                     <select className="custom-select" id="inputGroupSelect03" onChange={handleCurrencyChange}>
-                        <option defaultValue value="£">Pound</option>
+                        <option defaultValue value="£">Currency(Pound £)</option>
                         <option value="$">US Dollar</option>
-                        <option value="₹">Rupee</option>
+                        <option value="£">Pound</option>
                         <option value="€">Euro</option>
+                        <option value="₹">Rupee</option>
+                     
                     </select>
                 </div>
             </div>
+            <div className='d-none'>{currency}</div>
         </div>
     );
 };
